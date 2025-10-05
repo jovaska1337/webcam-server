@@ -1,0 +1,11 @@
+# ignore compiled python modules
+__pycache__/
+*.pyc
+
+# ignore venv
+venv
+
+# ignore VIM files
+*~
+*.swp
+*.swo

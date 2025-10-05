@@ -1,0 +1,14 @@
+[Unit]
+Description=Webcam streaming server
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+Group=video
+Restart=always
+RestartSec=5s
+ExecStart=/var/lib/webcam-server/run.sh
+
+[Install]
+WantedBy=multi-user.target
