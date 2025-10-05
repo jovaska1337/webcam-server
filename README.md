@@ -16,3 +16,8 @@ there are no sinks. Starting and stopping the IO task takes ~1 second or so.
 
 The server can listen on a TCP/IP socket or UNIX socket, check `webcam.conf` for configuration
 options.
+
+### Requirements
+
+The `run.sh` script is set up to automatically install all python dependencies (see `requirements.txt`).
+`libjpeg-turbo` must be installed for JPEG conversion.
