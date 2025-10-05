@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=www-data
-Group=video
+Group=www-data
 Restart=always
 RestartSec=5s
 PermissionsStartOnly=true

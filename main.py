@@ -3,6 +3,8 @@ import signal
 import asyncio
 import configparser
 
+from pwd import getpwnam
+from grp import getgrnam
 from pathlib import Path
 from hypercorn.config import Config
 from hypercorn.asyncio import serve
@@ -14,8 +16,11 @@ from server import server, close_sinks
 
 DEFAULT_CONFIG = {
     "Server" : {
-        "Bind" : "127.0.0.1",
-        "Port" : "10101"
+        "Bind"  : "127.0.0.1",
+        "Port"  : "10101",
+        "User"  : "nobody",
+        "Group" : "nobody",
+        "Umask" : "117"
     },
     "Camera" : {
         "DeviceId" : "0",
@@ -42,6 +47,9 @@ async def main():
     host = app_config.get("Server", "Bind")
     if (len(host) > 1) and (host[0] == "/"):
         hc_config.bind = [ f"unix:{host}" ]
+        hc_config.user = getpwnam(app_config.get("Server", "User")).pw_uid
+        hc_config.group = getgrnam(app_config.get("Server", "Group")).gr_gid
+        hc_config.umask = int(app_config.get("Server", "Umask"), 8)
     else:
         port = app_config.getint("Server", "Port")
         hc_config.bind = [ f"{host}:{port}" ]
