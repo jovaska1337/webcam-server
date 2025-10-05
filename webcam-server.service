@@ -4,10 +4,14 @@ After=network.target
 
 [Service]
 Type=simple
-User=nobody
+User=www-data
 Group=video
 Restart=always
 RestartSec=5s
+PermissionsStartOnly=true
+ExecStartPre=mkdir -p /run/webcam
+ExecStartPre=chown www-data:www-data /run/webcam
+ExecStartPre=chmod 0770 /run/webcam
 ExecStart=/var/lib/webcam-server/run.sh
 
 [Install]
